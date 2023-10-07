@@ -71,10 +71,11 @@ The rule will check whether test has title matched with pattern - default patter
 
 Available options: 
 
-| Option  | Description           |
-|---------|-----------------------|
-| pattern | regexp                |
-| message | string, error message |
+| Option      | Description                      |
+|-------------|----------------------------------|
+| pattern     | regexp                           |
+| message     | string, error message            |
+| identifiers | test identifiers. ex `it`/`xit`  |
 
 
 To configure the rule with options: 
