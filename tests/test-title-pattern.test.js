@@ -1,6 +1,6 @@
 'use strict';
 
-const rule = require('../lib/test-title-pattern-jest');
+const rule = require('../lib/rules/test-title-pattern');
 const RuleTester = require('eslint').RuleTester;
 
 const ruleTester = new RuleTester({ parserOptions: { ecmaVersion: 2015 } });
@@ -10,6 +10,14 @@ ruleTester.run('@mmisty/cypress/test-title-pattern-jest', rule, {
     {
       options: [{ pattern: /ID\d\d\s+/ }],
       code: "it('ID01 test', () => { })",
+    },
+    {
+      options: [{ pattern: /ID\d\d\s+/, identifiers: ['hello'] }],
+      code: "hello('ID01 test', () => { })",
+    },
+    {
+      options: [{ pattern: /ID\d\d\s+/, identifiers: ['hello'] }],
+      code: "it('my test', () => { })",
     },
     {
       options: [{ pattern: /should/i }],
@@ -50,17 +58,13 @@ ruleTester.run('@mmisty/cypress/test-title-pattern-jest', rule, {
     },
     {
       // default pattern
-      code: "it('test', () => { })",
-      errors: [
-        { message: 'Test title should match pattern: /^#\\d+[\\s\\w-_]/i' },
-      ],
+      code: "it('test.', () => { })",
+      errors: [{ message: 'Test title should match pattern: /^.*[^.]$/i' }],
     },
     {
       // default pattern with only
-      code: "it.only('test', () => { })",
-      errors: [
-        { message: 'Test title should match pattern: /^#\\d+[\\s\\w-_]/i' },
-      ],
+      code: "it.only('test.', () => { })",
+      errors: [{ message: 'Test title should match pattern: /^.*[^.]$/i' }],
     },
     {
       // no should when pattern template

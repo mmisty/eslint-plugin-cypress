@@ -2,6 +2,17 @@
 
 Additional linter rules for cypress tests
 
+
+## Table of Contents
+
+1. [Installation](#installation)
+1. [Recommended settings](#recommended-settings)
+2. [Setup](#setup)
+3. [Rules](#rules)
+    - [disallow-get-get-chain](#disallow-get-get-chain)
+    - [test-title-pattern](#test-title-pattern)
+    - [disallow-only](#disallow-only)
+   
 ### Installation
 
 ````shell script
@@ -12,43 +23,51 @@ yarn add -D @mmisty/eslint-plugin-cypress
 npm i --save-dev @mmisty/eslint-plugin-cypress
 ````
 
+### Recommended settings
+You can use recommended settings for cypress or jest.
+
+Just add the following into .eslintrc.js
+
+```
+// .eslintrc.js=
+    extends: [..., 'plugin:@mmisty/cypress/recommended'],
+```
+
 ### Setup
+
 To enable rules add the following to plugins section in your .eslintrc.js:
 ```
 plugins: ['@mmisty/cypress'],
 ```
 
-and add the following to the rules: 
+and add rules you want: 
 
 ```
  rules: {
-     "@mmisty/cypress/test-title-pattern-mocha": 'error',
+     "@mmisty/cypress/test-title-pattern": 'error',
    ...
   },
 
 ```
 
-### Recommended settings
-You can use recommended settings for mocha or jest.
-
-Just add the following into .eslintrc.js
-
-```
-    ...
-    extends: [..., 'plugin:@mmisty/cypress/jest-recommended'],
-    ...
-```
-
-#### Available configs: 
-- mocha-recommended
-- jest-recommended
-
 
 ## Rules
-### test-title-pattern
-test-title-pattern-mocha / test-title-pattern-jest 
 
-The rule will check whether test has title matched with pattern
+### disallow-get-get-chain
+
+Disallows chaining specified commands (default `['get']`).
+
+Will warn when user tries to do chains like `cy.get('id').get('id2');`
+
+```
+    rules: {
+        '@mmisty/cypress/disallow-get-get-chain': ['error', { methods: ['qaId', 'get'] }],
+    }
+```
+
+### test-title-pattern
+
+The rule will check whether test has title matched with pattern - default pattern not allows '.' at the end of test title
 
 Available options: 
 
@@ -61,21 +80,21 @@ Available options:
 To configure the rule with options: 
 ```
 rules: {
-    ...
-    "@mmisty/cypress/test-title-jest": ["error", {
+    "@mmisty/cypress/test-title-pattern": ["error", {
       pattern: /^ID\d+\w+should/i,
-      message: "Test should have ID"
+      message: "Test should have ID",
+      identifiers: ['it']
     }],
-
   },
 ```
 
-### disallow-get-get-chain
+### disallow-only
 
-Disallows chaining specified commands (default `['get']`)
+Disallows `.only` in tests
+To configure the rule:
 
 ```
-    rules: {
-        'cypress/disallow-get-get-chain': [2, { methods: ['qaId', 'get'] }],
-    }
+rules: {
+    "@mmisty/cypress/disallow-only": "error",
+  },
 ```

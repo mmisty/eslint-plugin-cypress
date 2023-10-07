@@ -1,4 +1,9 @@
 module.exports = {
+  rules: {
+    'test-title-pattern': require('./lib/rules/test-title-pattern'),
+    'disallow-only': require('./lib/rules/test-only-disallowed'),
+    'disallow-get-get-chain': require('./lib/rules/test-get-get-disallowed'),
+  },
   root: true,
   env: {
     es6: true,
@@ -15,26 +20,6 @@ module.exports = {
   },
   ignorePatterns: ['*.yaml', '*.yml', '*.csv'],
   configs: {
-    'jest-recommended': {
-      plugins: ['@mmisty/cypress'],
-      rules: {
-        '@mmisty/cypress/test-title-pattern-jest': 'error',
-        '@mmisty/cypress/disallow-only': 'error',
-      },
-    },
-    'mocha-recommended': {
-      plugins: ['@mmisty/cypress'],
-      rules: {
-        '@mmisty/cypress/test-title-pattern-mocha': 'error',
-        '@mmisty/cypress/disallow-only': 'error',
-        '@mmisty/cypress/disallow-get-get-chain': 'warn',
-      },
-    },
-  },
-  rules: {
-    'test-title-pattern-mocha': require('./lib/test-title-pattern-mocha'),
-    'test-title-pattern-jest': require('./lib/test-title-pattern-jest'),
-    'disallow-only': require('./lib/test-only-disallowed'),
-    'disallow-get-get-chain': require('./lib/test-get-get-disallowed'),
+    recommended: require('./lib/config/recommended'),
   },
 };

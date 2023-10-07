@@ -1,6 +1,6 @@
 'use strict';
 
-const rule = require('../lib/test-get-get-disallowed');
+const rule = require('../lib/rules/test-get-get-disallowed');
 const RuleTester = require('eslint').RuleTester;
 
 const ruleTester = new RuleTester({ parserOptions: { ecmaVersion: 2015 } });
