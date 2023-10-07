@@ -71,3 +71,11 @@ rules: {
 ```
 
 ### disallow-get-get-chain
+
+Disallows chaining specified commands (default `['get']`)
+
+```
+    rules: {
+        'cypress/disallow-get-get-chain': [2, { methods: ['qaId', 'get'] }],
+    }
+```

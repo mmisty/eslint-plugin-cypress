@@ -1,0 +1,78 @@
+name: NodeJS with Webpack
+permissions: write-all
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      - uses: volta-cli/action@v4
+      - name: Install
+        run: npm ci
+
+      - name: Versions
+        run: |
+          node --version
+          npm --version
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm run test
+
+      - name: Publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          # test
+          branch=${{ github.ref }}
+          echo "Branch: $branch" 
+          
+          gitmsg="${{ github.event.commits[0].message }}"
+          echo "Commit: $gitmsg" 
+          
+          if [[ "$gitmsg" =~ "[patch]" ]]; then
+            echo "publish patch"
+            npm run publish:patch
+            git push --tags
+            exit 0
+          fi 
+          
+          if [[ "$gitmsg" =~ "[fix]" ]]; then
+            echo "publish patch"
+            npm run publish:patch
+            git push --tags
+            exit 0
+          fi
+          
+          if [[ "$gitmsg" =~ "[minor]" ]]; then
+            echo "publish minor"
+            npm run publish:minor
+            git push --tags
+            exit 0
+          fi
+          
+          if [[ "$gitmsg" =~ "[major]" ]]; then
+            echo "publish major"
+            npm run publish:major
+            git push --tags
+            exit 0
+          fi
+          
+          echo "publishing alpha, for other commit message should contain [minor], [major] or [patch]/[fix]"
+          npm run publish:alpha
+          git push --tags
