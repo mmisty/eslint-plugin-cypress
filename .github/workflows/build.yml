@@ -1,4 +1,4 @@
-name: NodeJS with Webpack
+name: BuildAndTest
 permissions: write-all
 
 on:
@@ -33,46 +33,3 @@ jobs:
 
       - name: Test
         run: npm run test
-
-      - name: Publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          # test
-          branch=${{ github.ref }}
-          echo "Branch: $branch" 
-          
-          gitmsg="${{ github.event.commits[0].message }}"
-          echo "Commit: $gitmsg" 
-          
-          if [[ "$gitmsg" =~ "[patch]" ]]; then
-            echo "publish patch"
-            npm run publish:patch
-            git push --tags
-            exit 0
-          fi 
-          
-          if [[ "$gitmsg" =~ "[fix]" ]]; then
-            echo "publish patch"
-            npm run publish:patch
-            git push --tags
-            exit 0
-          fi
-          
-          if [[ "$gitmsg" =~ "[minor]" ]]; then
-            echo "publish minor"
-            npm run publish:minor
-            git push --tags
-            exit 0
-          fi
-          
-          if [[ "$gitmsg" =~ "[major]" ]]; then
-            echo "publish major"
-            npm run publish:major
-            git push --tags
-            exit 0
-          fi
-          
-          echo "publishing alpha, for other commit message should contain [minor], [major] or [patch]/[fix]"
-          npm run publish:alpha
-          git push --tags
