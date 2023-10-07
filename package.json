@@ -1,7 +1,7 @@
 {
   "name": "@mmisty/eslint-plugin-cypress",
   "version": "0.0.0",
-  "description": "rules for cypress tests",
+  "description": "additional rules for cypress tests",
   "author": "Taisia Pitko (mmisty) <minydas@yandex.ru>",
   "license": "Apache-2.0",
   "scripts": {
@@ -20,6 +20,15 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
+  "keywords": [
+    "cypress",
+    "lint",
+    "e2e",
+    "tests",
+    "eslint",
+    "plugins",
+    "@mmisty/eslint-plugin-cypress"
+  ],
   "peerDependencies": {
     "eslint": ">= 7"
   },

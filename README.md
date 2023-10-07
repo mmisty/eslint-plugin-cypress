@@ -29,8 +29,8 @@ You can use recommended settings for cypress or jest.
 Just add the following into .eslintrc.js
 
 ```
-// .eslintrc.js=
-    extends: [..., 'plugin:@mmisty/cypress/recommended'],
+// .eslintrc.js
+extends: ['plugin:@mmisty/cypress/recommended'],
 ```
 
 ### Setup
@@ -43,11 +43,9 @@ plugins: ['@mmisty/cypress'],
 and add rules you want: 
 
 ```
- rules: {
-     "@mmisty/cypress/test-title-pattern": 'error',
-   ...
-  },
-
+rules: {
+  "@mmisty/cypress/test-title-pattern": 'error'
+}
 ```
 
 
@@ -60,9 +58,9 @@ Disallows chaining specified commands (default `['get']`).
 Will warn when user tries to do chains like `cy.get('id').get('id2');`
 
 ```
-    rules: {
-        '@mmisty/cypress/disallow-get-get-chain': ['error', { methods: ['qaId', 'get'] }],
-    }
+rules: {
+  '@mmisty/cypress/disallow-get-get-chain': ['error', { methods: ['qaId', 'get'] }],
+}
 ```
 
 ### test-title-pattern
@@ -81,12 +79,12 @@ Available options:
 To configure the rule with options: 
 ```
 rules: {
-    "@mmisty/cypress/test-title-pattern": ["error", {
-      pattern: /^ID\d+\w+should/i,
-      message: "Test should have ID",
-      identifiers: ['it']
-    }],
-  },
+  "@mmisty/cypress/test-title-pattern": ["error", {
+     pattern: /^ID\d+\w+should/i,
+     message: "Test should have ID",
+     identifiers: ['it']
+  }],
+},
 ```
 
 ### disallow-only
@@ -96,6 +94,6 @@ To configure the rule:
 
 ```
 rules: {
-    "@mmisty/cypress/disallow-only": "error",
-  },
+  "@mmisty/cypress/disallow-only": "error",
+},
 ```
